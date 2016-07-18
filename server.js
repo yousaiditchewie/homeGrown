@@ -38,6 +38,7 @@ app.use(cookieParser('notsosecretnowareyou'));
 // Routes to static assets. Uncomment below if you have a favicon.
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // Useful for debugging the state of requests.
 app.use(debugReq);

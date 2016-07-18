@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     debug    = require('debug')('app:models');
 
 var userSchema = new mongoose.Schema({
-  name:   String,
+  firstName:   String,
   handle: String
 });
 
