@@ -1,5 +1,1 @@
-# homeGrown
-
-:tada:
-
-Enjoy… 
+#homeGrown is a helpful way to turn your excess into currency.
