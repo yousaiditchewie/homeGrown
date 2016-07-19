@@ -9,7 +9,7 @@ var goodSchema = new mongoose.Schema({
   },
   description: {
     type:     String,
-    validate: [checkLength, "Descriptions must be less than 180 characters."]
+    validate: [check180, "Descriptions must be less than 180 characters."]
   },
   inSeason:    {
     type:    Boolean,
@@ -22,6 +22,27 @@ var goodSchema = new mongoose.Schema({
     enum:      ['S', 'M', 'L', 'XL']
   }
 });
+
+
+var postSchema = new mongoose.Schema({
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:  'User'
+  },
+  blogs:     {
+    type: String,
+    validate: [check500, "Must be less than 500 characters"]
+  },
+  photoUrl:  String
+});
+
+function check180(str) {
+  return str.length > 0 && str.length < 180;
+};
+
+function check500(str) {
+  return str.length > 0 && str.length < 500;
+};
 
 var userSchema = new mongoose.Schema({
   firstName:   {
@@ -54,13 +75,11 @@ var userSchema = new mongoose.Schema({
     type:    Number,
     default: 5
   },
-  goods:       [goodSchema]
+  goods:       [goodSchema],
+  posts:       [postSchema]
 });
 
 
-function checkLength(str) {
-  return str.length > 0 && str.length < 180;
-};
 
 var User = mongoose.model('User', userSchema);
 
