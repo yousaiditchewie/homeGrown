@@ -2,6 +2,27 @@ var mongoose = require('mongoose');
 var debug    = require('debug')('app:models');
 var bcrypt   = require('bcrypt-nodejs');
 
+var goodSchema = new mongoose.Schema({
+  name:     {
+    type:     String,
+    required: true
+  },
+  description: {
+    type:     String,
+    validate: [checkLength, "Descriptions must be less than 180 characters."]
+  },
+  inSeason:    {
+    type:    Boolean,
+    default: false
+  },
+  quantity:    {
+    type:      String,
+    required:  true,
+    default:   'S',
+    enum:      ['S', 'M', 'L', 'XL']
+  }
+});
+
 var userSchema = new mongoose.Schema({
   firstName:   {
     type:     String,
@@ -36,23 +57,6 @@ var userSchema = new mongoose.Schema({
   goods:       [goodSchema]
 });
 
-var goodSchema = new mongoose.Schema({
-  name:     {
-    type:     String,
-    required: true
-  },
-  description: {
-    type:     String,
-    validate: [checkLength, "Descriptions must be less than 180 characters."]
-  },
-  inSeason:    Boolean,
-  quantity:    {
-    type:      String,
-    required:  true,
-    default:   'S',
-    enum:      ['S', 'M', 'L', 'XL']
-  }
-});
 
 function checkLength(str) {
   return str.length > 0 && str.length < 180;
