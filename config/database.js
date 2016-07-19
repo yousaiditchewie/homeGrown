@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+mongoose.Promise = Promise;
 var env = require('./environment');
 
 // Use different database URIs based on whether an env var exists.

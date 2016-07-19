@@ -6,6 +6,8 @@ var bodyParser   = require('body-parser');
 var debug        = require('debug')('app:http');
 var cookieParser = require('cookie-parser');
 
+require('dotenv').config();
+
 // Load local libraries.
 var env      = require('./config/environment'),
     mongoose = require('./config/database'),
