@@ -3,7 +3,7 @@ var debug    = require('debug')('app:models');
 var bcrypt   = require('bcrypt-nodejs');
 
 // Goods refer to what a user brings to a meetup for trade
-var goodSchema = new mongoose.Schema({
+var GoodSchema = new mongoose.Schema({
   name:     {
     type:     String,
     required: true
@@ -25,7 +25,7 @@ var goodSchema = new mongoose.Schema({
 });
 
 // Users will be able to like a post created by other users
-var likeSchema = new mongoose.Schema({
+var LikeSchema = new mongoose.Schema({
   isLiked: Boolean,
   likedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -44,12 +44,12 @@ var postSchema = new mongoose.Schema({
     validate: [check500, "Must be less than 500 characters"]
   },
   photoUrl:  String,
-  likes: [likeSchema]
+  likes: [LikeSchema]
 });
 
 
 
-var userSchema = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
   firstName:   {
     type:     String,
     required: true
@@ -85,7 +85,7 @@ var userSchema = new mongoose.Schema({
     type:    Number,
     default: 5
   },
-  goods:       [goodSchema],
+  goods:       [GoodSchema],
   posts:       [postSchema]
 });
 
@@ -97,8 +97,17 @@ function check500(str) {
   return str.length > 0 && str.length < 500;
 };
 
+
+// exclude password
+UserSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    delete ret.password;
+    return ret;
+  }
+});
+
 // hash the password before the user is saved
-userSchema.pre('save', function(next) {
+UserSchema.pre('save', function(next) {
   var user = this;
 
   // hash the password only if the password has been changed or user is new
@@ -115,12 +124,12 @@ userSchema.pre('save', function(next) {
 });
 
 // method to compare a given password with the database hash
-userSchema.methods.comparePassword = function(password) {
+UserSchema.methods.comparePassword = function(password) {
   var user = this;
 
   return bcrypt.compareSync(password, user.password);
 };
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

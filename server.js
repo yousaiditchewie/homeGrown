@@ -6,7 +6,7 @@ var bodyParser   = require('body-parser');
 var debug        = require('debug')('app:http');
 var cookieParser = require('cookie-parser');
 
-require('dotenv').config();
+require('dotenv').load();
 
 // Load local libraries.
 var env      = require('./config/environment'),
@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(debugReq);
 
 // Defines all of our "dynamic" routes.
-app.use('/', routes);
+app.use('/api', routes);
 
 // Catches all 404 routes.
 app.use(function(req, res, next) {
