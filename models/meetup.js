@@ -1,24 +1,18 @@
 var mongoose = require('mongoose');
 var User     = require('./user.js');
 
-// var attendingSchema = new mongoose.Schema({
-//   attendee: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref:  'User'
-//   }
-// });
 
-// var messageSchema = new mongoose.Schema({
-//   content: {
-//     type: String,
-//     required: true,
-//     // validate: [checkLength, "Messages must be less than 400 characters."]
-//   },
-//   isAppropriate: {
-//     type:    Boolean,
-//     default: true
-//   }
-// });
+var messageSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+    validate: [checkLength, "Messages must be less than 400 characters."]
+  },
+  isAppropriate: {
+    type:    Boolean,
+    default: true
+  }
+});
 
 var meetupSchema = new mongoose.Schema({
   createdBy:          {
@@ -34,17 +28,7 @@ var meetupSchema = new mongoose.Schema({
   time:               Date,
   suggestedLocation:  String,
   actualLocation:     String,
-  messageBoard:       [
-    {
-      type: String,
-      required: true,
-      // validate: [checkLength, "Messages must be less than 400 characters."]
-      isAppropriate: {
-        type:    Boolean,
-        default: true
-      }
-    },
-  ],
+  messageBoard:       [messageSchema],
   isCompleted:        {
     type: Boolean,
     default: false
@@ -52,9 +36,27 @@ var meetupSchema = new mongoose.Schema({
 });
 
 
-// function checkLength(str){
-//   return str.length >= 0 && str.length < 400;
-// };
+function checkLength(str){
+  return str.length >= 0 && str.length < 400;
+};
+
+meetupSchema.methods.goods = function(callback) {
+  let meetUpUsers = this.attending;
+  meetUpUsers.push(this.createdBy);
+  mongoose.model('User').find({
+    "_id": {$in: meetUpUsers}
+  }, function(err, users) {
+    if (err) console.log(err);
+    let goods = [];
+    users.forEach(e => {
+      goods.push(...e.goods);
+    });
+    console.log("GOODS! ", goods);
+    console.log("USERS! ", users);
+    goods = goods.filter(e => e.isReady);
+    callback(err, goods);
+  })
+}
 
 var Meetup = mongoose.model('Meetup', meetupSchema);
 

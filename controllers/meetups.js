@@ -19,7 +19,11 @@ var show = function(req, res, next) {
     } else if (!meetup) {
       res.json({message: 'No meetup with this ID.'});
     } else {
-      res.json(meetup);
+      meetup.goods(function(err, goods) {
+        if (err) res.json(err);
+
+        res.json({meetup, goods});
+      });
     }
   });
 };

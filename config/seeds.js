@@ -19,7 +19,7 @@ var users = [
       {
         name:        'Apples',
         description: 'Juicy, delicous, apples',
-        isReady:    false,
+        isReady:     true,
         quantity:    'M'
       },
       {
@@ -50,6 +50,7 @@ var users = [
   }
 ];
 
+var meetups =
 
 
 // remove any fish or users in the database
@@ -80,6 +81,7 @@ Meetup.remove({}, function(err) {
         if (err) {
           console.log(err);
         } else{
+          // console.log(users[0].goods());
           console.log(`Database seeded with ${users.length} users and ${meetups.length} meetups`);
 
           // disconnect db
