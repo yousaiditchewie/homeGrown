@@ -16,5 +16,6 @@ router.get('/users/:id', UsersController.show);
 router.get('/meetups',     MeetupsController.index);
 router.get('/meetups/:id', MeetupsController.show);
 router.post('/meetups',    MeetupsController.create);
+router.delete('/meetups/:id',  MeetupsController.deleteMeetup);
 
 module.exports = router;

@@ -37,13 +37,23 @@ var create = function(req, res, next) {
   });
 };
 
-
+// delete meetup
+var deleteMeetup = function(req, res, next) {
+  var id = req.params.id;
+  Meetup.remove({"_id" : id}, function(err) {
+    if (err) {
+      res.json(err);
+    }
+    res.json({message: "This meetup has been cancelled."});
+  })
+};
 
 
 module.exports = {
-  index:  index,
-  show:   show,
-  create: create
+  index:        index,
+  show:         show,
+  create:       create,
+  deleteMeetup: deleteMeetup
 };
 
 
