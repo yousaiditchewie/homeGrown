@@ -9,8 +9,10 @@ var MeetupsController = require('../controllers/meetups');
 // router.get('/', pagesController.welcome);
 
 // users resource paths:
-router.get('/users',     UsersController.index);
-router.get('/users/:id', UsersController.show);
+router.get('/users',        UsersController.index);
+router.get('/users/:id',    UsersController.show);
+router.post('/users',       UsersController.create);
+router.delete('/users/:id', UsersController.deleteUser);
 
 // meetups resource paths:
 router.get('/meetups',     MeetupsController.index);

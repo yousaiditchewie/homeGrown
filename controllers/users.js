@@ -1,6 +1,7 @@
 // Require resource's model(s).
 var User = require("../models/user");
 
+// view all users
 var index = function(req, res, next){
   User.find({}, function(err, users) {
     if (err) {
@@ -11,6 +12,7 @@ var index = function(req, res, next){
   });
 };
 
+// view selected user
 var show = function(req, res, next){
   User.findById(req.params.id, function(err, user) {
     if (err) {
@@ -23,7 +25,42 @@ var show = function(req, res, next){
   });
 };
 
+// create new user
+var create = function(req, res, next) {
+  var user = new User();
+  user.firstName  = req.body.firstName;
+  user.lastName   = req.body.lastName;
+  user.email      = req.body.email;
+  user.password   = req.body.password;
+  user.aboutMe    = req.body.aboutMe;
+  user.profilePic = req.body.profilePic;
+  user.streetAddr = req.body.streetAddr;
+  user.zipCode    = req.body.zipCode;
+
+  user.save(function(err) {
+    if (err) {
+      if(err.code == 11000)
+        return res.json({success: false, message: 'That email is already in our system!'});
+    } else {
+      return res.json(err);
+    }
+
+    res.json({message: "Welcome to homeGrown!"});
+  });
+};
+
+// delete a user
+var deleteUser = function(req, res, next) {
+  var id = req.params.id;
+  User.remove({_id: id}, function(err, user) {
+    if (err) res.send(err);
+    res.json({message: "Goodbye.  Thanks for using homeGrown."});
+  });
+};
+
 module.exports = {
-  index: index,
-  show:  show
+  index:      index,
+  show:       show,
+  create:     create,
+  deleteUser: deleteUser
 };

@@ -70,6 +70,7 @@ var userSchema = new mongoose.Schema({
     validate: [check180, 'Must have less than 180 characters.']
   },
   profilePic:  String,
+  streetAddr:  String,
   zipCode:     {
     type:      String,
     required:  true,
