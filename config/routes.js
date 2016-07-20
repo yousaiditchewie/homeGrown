@@ -3,17 +3,18 @@ var router  = new express.Router();
 
 // Require controllers.
 var pagesController   = require('../controllers/pages');
-var usersController   = require('../controllers/users');
-var meetupsController = require('../controllers/meetups');
+var UsersController   = require('../controllers/users');
+var MeetupsController = require('../controllers/meetups');
 // root path:
 // router.get('/', pagesController.welcome);
 
 // users resource paths:
-router.get('/users',     usersController.index);
-router.get('/users/:id', usersController.show);
+router.get('/users',     UsersController.index);
+router.get('/users/:id', UsersController.show);
 
 // meetups resource paths:
-router.get('/meetups',     meetupsController.index);
-router.get('/meetups/:id', meetupsController.show);
+router.get('/meetups',     MeetupsController.index);
+router.get('/meetups/:id', MeetupsController.show);
+router.post('/meetups',    MeetupsController.create);
 
 module.exports = router;

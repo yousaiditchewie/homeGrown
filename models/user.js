@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var debug    = require('debug')('app:models');
 var bcrypt   = require('bcrypt-nodejs');
 
+// Goods refer to what a user brings to a meetup for trade
 var goodSchema = new mongoose.Schema({
   name:     {
     type:     String,
@@ -11,7 +12,7 @@ var goodSchema = new mongoose.Schema({
     type:     String,
     validate: [check180, "Descriptions must be less than 180 characters."]
   },
-  inSeason:    {
+  isReady:    {
     type:    Boolean,
     default: false
   },
@@ -23,7 +24,16 @@ var goodSchema = new mongoose.Schema({
   }
 });
 
+// Users will be able to like a post created by other users
+var likeSchema = new mongoose.Schema({
+  isLiked: Boolean,
+  likedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:  'User'
+  }
+});
 
+// Users will be able to create posts for the blog portion of the app
 var postSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,16 +43,11 @@ var postSchema = new mongoose.Schema({
     type: String,
     validate: [check500, "Must be less than 500 characters"]
   },
-  photoUrl:  String
+  photoUrl:  String,
+  likes: [likeSchema]
 });
 
-function check180(str) {
-  return str.length > 0 && str.length < 180;
-};
 
-function check500(str) {
-  return str.length > 0 && str.length < 500;
-};
 
 var userSchema = new mongoose.Schema({
   firstName:   {
@@ -59,6 +64,10 @@ var userSchema = new mongoose.Schema({
     type:     String,
     required: true,
     select:   false
+  },
+  aboutMe:     {
+    type: String,
+    validate: [check180, 'Must have less than 180 characters.']
   },
   profilePic:  String,
   zipCode:     {
@@ -79,6 +88,13 @@ var userSchema = new mongoose.Schema({
   posts:       [postSchema]
 });
 
+function check180(str) {
+  return str.length > 0 && str.length < 180;
+};
+
+function check500(str) {
+  return str.length > 0 && str.length < 500;
+};
 
 
 var User = mongoose.model('User', userSchema);

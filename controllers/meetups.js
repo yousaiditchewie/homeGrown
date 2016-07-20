@@ -1,5 +1,6 @@
 var Meetup = require('../models/meetup');
 
+// view all meetups
 var index = function(req, res, next) {
   Meetup.find({}, function(err, meetups) {
     if (err) {
@@ -10,6 +11,7 @@ var index = function(req, res, next) {
   });
 };
 
+// view selected meetup
 var show = function(req, res, next) {
   Meetup.findById(req.params.id, function(err, meetup) {
     if (err) {
@@ -22,7 +24,27 @@ var show = function(req, res, next) {
   });
 };
 
-module.exports = {
-  index: index,
-  show:  show
+
+// make a new meetup
+var create = function(req, res, next) {
+  var meetup = new Meetup();
+  meetup.save(function(err, savedMeetup) {
+    if (err) {
+      res.send(err);
+    }
+    console.log('Meetup Created!');
+    res.json(savedMeetup);
+  });
 };
+
+
+
+
+module.exports = {
+  index:  index,
+  show:   show,
+  create: create
+};
+
+
+

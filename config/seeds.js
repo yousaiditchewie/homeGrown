@@ -11,6 +11,7 @@ var users = [
     email:     'jedijake@me.com',
     password:  'abc123',
     //profilePic:
+    aboutMe:   "My name is Jacob, and I'm the developer responsible for homeGrown.  I hope you find it helpful when your lemon tree yields more lemons than you know what to do with.",
     zipCode:   '90042',
     admin:     true,
     rating:    5,
@@ -18,13 +19,13 @@ var users = [
       {
         name:        'Apples',
         description: 'Juicy, delicous, apples',
-        inSeason:    false,
+        isReady:    false,
         quantity:    'M'
       },
       {
         name:        'Sourdough Bread',
         description: 'Wholesome and nutritious sourdough bread.',
-        inSeason:    false,
+        isReady:    false,
         quantity:    'S'
       }
     ]
@@ -42,7 +43,7 @@ var users = [
       {
         name:        'Oranges',
         description: '"Golden Apples" from the Far East.',
-        inSeason:    true,
+        isReady:    true,
         quantity:    'L'
       }
     ]
