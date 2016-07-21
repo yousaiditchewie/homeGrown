@@ -24,28 +24,28 @@ var GoodSchema = new mongoose.Schema({
   }
 });
 
-// Users will be able to like a post created by other users
-var LikeSchema = new mongoose.Schema({
-  isLiked: Boolean,
-  likedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref:  'User'
-  }
-});
+// // Users will be able to like a post created by other users
+// var LikeSchema = new mongoose.Schema({
+//   isLiked: Boolean,
+//   likedBy: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref:  'User'
+//   }
+// });
 
-// Users will be able to create posts for the blog portion of the app
-var postSchema = new mongoose.Schema({
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref:  'User'
-  },
-  blogs:     {
-    type: String,
-    validate: [check500, "Must be less than 500 characters"]
-  },
-  photoUrl:  String,
-  likes: [LikeSchema]
-});
+// // Users will be able to create posts for the blog portion of the app
+// var postSchema = new mongoose.Schema({
+//   createdBy: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref:  'User'
+//   },
+//   blogs:     {
+//     type: String,
+//     validate: [check500, "Must be less than 500 characters"]
+//   },
+//   photoUrl:  String,
+//   likes: [LikeSchema]
+// });
 
 
 
@@ -86,7 +86,7 @@ var UserSchema = new mongoose.Schema({
     default: 5
   },
   goods:       [GoodSchema],
-  posts:       [postSchema]
+  // posts:       [postSchema]
 });
 
 function check180(str) {

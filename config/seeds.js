@@ -1,7 +1,7 @@
 var mongoose = require('./database');
 var User     = require('../models/user');
 var Meetup   = require('../models/meetup');
-var Blog     = require('../models/blog');
+var Post     = require('../models/post');
 
 // users seeds:
 var users = [
@@ -50,8 +50,18 @@ var users = [
   }
 ];
 
-var meetups =
 
+
+      var meetups = [
+        {
+          createdBy: users[0]._id,
+          attending: users[1]._id
+        },
+        {
+          createdBy: users[1]._id,
+          attending: users[0]._id
+        }
+      ];
 
 // remove any fish or users in the database
 Meetup.remove({}, function(err) {
@@ -64,16 +74,6 @@ Meetup.remove({}, function(err) {
     User.create(users, function(err, users) {
 
       // meetups seeds:
-      var meetups = [
-        {
-          createdBy: users[0]._id,
-          attending: users[1]._id
-        },
-        {
-          createdBy: users[1]._id,
-          attending: users[0]._id
-        }
-      ];
 
       // create default fishes
       Meetup.create(meetups, function(err, meetups) {

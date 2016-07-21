@@ -5,6 +5,7 @@ var router  = new express.Router();
 var pagesController   = require('../controllers/pages');
 var UsersController   = require('../controllers/users');
 var MeetupsController = require('../controllers/meetups');
+var PostsController   = require('../controllers/posts');
 var AuthsController   = require('../controllers/auths');
 // root path:
 // router.get('/', pagesController.welcome);
@@ -25,5 +26,10 @@ router.get('/meetups/:id',     MeetupsController.show);
 router.post('/meetups',        MeetupsController.create);
 router.put('/meetups/:id',     MeetupsController.update);
 router.delete('/meetups/:id',  MeetupsController.deleteMeetup);
+
+// posts resource paths:
+router.get('/posts',           PostsController.index);
+router.get('/posts/:id',       PostsController.show);
+router.post('/posts',          PostsController.create);
 
 module.exports = router;
