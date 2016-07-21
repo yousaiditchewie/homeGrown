@@ -16,12 +16,14 @@ router.post('/login', AuthsController.userAuth)
 router.get('/users',           UsersController.index);
 router.get('/users/:id',       UsersController.show);
 router.post('/users',          UsersController.create);
+router.put('/users/:id',       UsersController.update);
 router.delete('/users/:id',    UsersController.deleteUser);
 
 // meetups resource paths:
 router.get('/meetups',         MeetupsController.index);
 router.get('/meetups/:id',     MeetupsController.show);
 router.post('/meetups',        MeetupsController.create);
+router.put('/meetups/:id',     MeetupsController.update);
 router.delete('/meetups/:id',  MeetupsController.deleteMeetup);
 
 module.exports = router;

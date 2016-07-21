@@ -5,7 +5,6 @@ var User     = require('./user.js');
 var messageSchema = new mongoose.Schema({
   content: {
     type: String,
-    required: true,
     validate: [checkLength, "Messages must be less than 400 characters."]
   },
   isAppropriate: {
