@@ -5,13 +5,14 @@ var secret   = process.env.GOOGLESECRET;
 // store response from google geo in memory to use in #2
 var lat;
 var lng;
+
 // #1. make http request to lookup location/return lat+lon
 function suggestLocation(zipCode) {
   var geoUrl   = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${key}`;
 
   request(geoUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      lat = JSON.parse(body).results[0].geometry.location.lat; // Show the HTML for the Google homepage.
+      lat = JSON.parse(body).results[0].geometry.location.lat;
       lng = JSON.parse(body).results[0].geometry.location.lng;
       lookupPlace(lat, lng);
     }
@@ -30,5 +31,5 @@ function lookupPlace(lat, lng) {
 
 // lookupPlace(34.1175895, -118.188329);
 // 1933 South Broadway Los Angeles, CA 90007
-suggestLocation('4770 York Blvd Los Angeles, CA 90042'); // { lat: 34.1175895, lng: -118.188329 }
+suggestLocation('4770 York Blvd Los Angeles, CA 90042');
 
