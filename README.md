@@ -200,3 +200,47 @@ A successful `GET` to `api/posts/57915d527dc063db22e426fc` will respond with:
 ]
 ```
 
+##My approach
+
+I wanted to build a full-stack app that was very simple and easy to use.  However, once I started building my back-end, I realized that the infrastructure I wanted to implement required a lot of nested data to be generated.  So, by default, I built an API with the intentions of filling in the front-end as an ongoing project when WDI is completed.  
+
+There are a few finishing touches I need to put on my API, but the front end should take me about the same amount of time to complete.  When it is completed, I hope to have an app from which many can benefit and many will use.  
+
+##Hurdles
+That sweet, sweet data.  I realized that in order to have the features I wanted the app to have, I had to generate a lot of sweet, sweet data.  
+
+There were also a few hurdles retrieving and manipulating nested data.  For instance, it took a lot of time and energy to make a function that would display User's Goods from within the Meetup model. Eventually, with a ton of help from Ezra, we (he) figured this out....
+
+```javascript
+meetupSchema.methods.goods = function(callback) {
+  let meetUpUsers = this.attending;
+  meetUpUsers.push(this.createdBy);
+  mongoose.model('User').find({
+    "_id": {$in: meetUpUsers}
+  }, function(err, users) {
+    if (err) console.log(err);
+    let goods = [];
+    users.forEach(e => {
+      goods.push(...e.goods);
+    });
+    console.log("GOODS! ", goods);
+    console.log("USERS! ", users);
+    goods = goods.filter(e => e.isReady);
+    callback(err, goods);
+  });
+};
+```
+
+I then called this function from my MeetupsController when sending a `GET` request to show a single meetup. 
+
+##In the IceBox
+I would have liked to finished the front end of the app, but at the same time, I want this app to be my keystone project for my portfolio, and I'd like it to be genuinely useable.  I will finish the front end in weeks to come.
+
+[obligatory trello link](https://trello.com/b/IaY9t1vH/homegrown)
+
+###Special Thanks
+* Ezra Raez
+* PhilCo
+* WesCoasPhil
+* ~~Jim~~
+* WDI DTLA-X
