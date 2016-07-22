@@ -81,7 +81,7 @@ var deleteMeetup = function(req, res, next) {
       res.json(err);
     }
     res.json({message: "This meetup has been cancelled."});
-  })
+  });
 };
 
 

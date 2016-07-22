@@ -2,7 +2,7 @@ var express = require('express');
 var router  = new express.Router();
 
 // Require controllers.
-var pagesController   = require('../controllers/pages');
+// var pagesController   = require('../controllers/pages');
 var UsersController   = require('../controllers/users');
 var MeetupsController = require('../controllers/meetups');
 var PostsController   = require('../controllers/posts');
@@ -11,7 +11,7 @@ var AuthsController   = require('../controllers/auths');
 // router.get('/', pagesController.welcome);
 
 // login route
-router.post('/login', AuthsController.userAuth)
+router.post('/login',          AuthsController.userAuth);
 
 // users resource paths:
 router.get('/users',           UsersController.index);
@@ -31,5 +31,6 @@ router.delete('/meetups/:id',  MeetupsController.deleteMeetup);
 router.get('/posts',           PostsController.index);
 router.get('/posts/:id',       PostsController.show);
 router.post('/posts',          PostsController.create);
+router.delete('/posts/:id',    PostsController.deletePost);
 
 module.exports = router;

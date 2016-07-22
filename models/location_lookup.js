@@ -20,7 +20,7 @@ function suggestLocation(zipCode) {
 
 // #2. make http request to search places by lat+lon
 function lookupPlace(lat, lng) {
-  var placeUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&type=park&key=${key}`;
+  var placeUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=600&type=park&key=${key}`;
   request(placeUrl, function(error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(JSON.parse(body).results);
@@ -29,5 +29,6 @@ function lookupPlace(lat, lng) {
 };
 
 // lookupPlace(34.1175895, -118.188329);
+// 1933 South Broadway Los Angeles, CA 90007
 suggestLocation('4770 York Blvd Los Angeles, CA 90042'); // { lat: 34.1175895, lng: -118.188329 }
 

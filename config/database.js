@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+var mongoose     = require('mongoose');
 mongoose.Promise = Promise;
-var env = require('./environment');
+var env          = require('./environment');
 
 // Use different database URIs based on whether an env var exists.
 var dbUri = env.MLAB_URI ||

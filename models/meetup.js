@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
 var User     = require('./user.js');
 
-
+// meetups have a message board containing messages
 var messageSchema = new mongoose.Schema({
-  content: {
+  createdBy:     {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  content:       {
     type: String,
-    validate: [checkLength, "Messages must be less than 400 characters."]
+    validate: [check400, "Messages must be less than 400 characters."]
   },
   isAppropriate: {
     type:    Boolean,
@@ -34,11 +38,12 @@ var meetupSchema = new mongoose.Schema({
   }
 });
 
-
-function checkLength(str){
+// verify messages are less than 400 characters
+function check400(str){
   return str.length >= 0 && str.length < 400;
 };
 
+// displays all user.goods for trade at meetup
 meetupSchema.methods.goods = function(callback) {
   let meetUpUsers = this.attending;
   meetUpUsers.push(this.createdBy);
@@ -54,8 +59,8 @@ meetupSchema.methods.goods = function(callback) {
     console.log("USERS! ", users);
     goods = goods.filter(e => e.isReady);
     callback(err, goods);
-  })
-}
+  });
+};
 
 var Meetup = mongoose.model('Meetup', meetupSchema);
 

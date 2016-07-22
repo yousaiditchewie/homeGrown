@@ -33,17 +33,28 @@ var create = function(req, res, next) {
   post.likes     = req.body.likes;
 
   post.save(function(err) {
-    if (err) {
-      return res.json(err);
-    }
-    res.json({message: "Your post is fantastic"});
+    if (err) return res.json(err);
+    res.json({message: "Nice Post"});
   });
-}
+};
+
+// users cannot update posts at this time
+// maybe in homeGrown II: The Search for More Money...
+
+// delete a post
+var deletePost = function(req, res, next) {
+  var id = req.params.id;
+  Post.remove({_id: id}, function(err, post) {
+    if (err) {
+      res.send(err)
+    };
+    res.json({message: "That post is ghost"});
+  });
+};
 
 module.exports = {
   index:      index,
   show:       show,
-  create:     create
-  // update:     update,
-  // deletePost: deletePost
+  create:     create,
+  deletePost: deletePost
 };

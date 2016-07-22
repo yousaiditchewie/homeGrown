@@ -24,31 +24,6 @@ var GoodSchema = new mongoose.Schema({
   }
 });
 
-// // Users will be able to like a post created by other users
-// var LikeSchema = new mongoose.Schema({
-//   isLiked: Boolean,
-//   likedBy: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref:  'User'
-//   }
-// });
-
-// // Users will be able to create posts for the blog portion of the app
-// var postSchema = new mongoose.Schema({
-//   createdBy: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref:  'User'
-//   },
-//   blogs:     {
-//     type: String,
-//     validate: [check500, "Must be less than 500 characters"]
-//   },
-//   photoUrl:  String,
-//   likes: [LikeSchema]
-// });
-
-
-
 var UserSchema = new mongoose.Schema({
   firstName:   {
     type:     String,
@@ -85,18 +60,14 @@ var UserSchema = new mongoose.Schema({
     type:    Number,
     default: 5
   },
-  goods:       [GoodSchema],
+  goods:       [GoodSchema]
   // posts:       [postSchema]
 });
 
+// verify aboutMe and goods description are less than 180 characters
 function check180(str) {
   return str.length > 0 && str.length < 180;
 };
-
-function check500(str) {
-  return str.length > 0 && str.length < 500;
-};
-
 
 // exclude password
 UserSchema.set('toJSON', {
@@ -109,14 +80,11 @@ UserSchema.set('toJSON', {
 // hash the password before the user is saved
 UserSchema.pre('save', function(next) {
   var user = this;
-
   // hash the password only if the password has been changed or user is new
   if (!user.isModified('password')) return next();
-
   // generate the hash
   bcrypt.hash(user.password, null, null, function(err, hash) {
     if (err) return next(err);
-
     // change the password to the hashed version
     user.password = hash;
     next();
@@ -126,7 +94,6 @@ UserSchema.pre('save', function(next) {
 // method to compare a given password with the database hash
 UserSchema.methods.comparePassword = function(password) {
   var user = this;
-
   return bcrypt.compareSync(password, user.password);
 };
 

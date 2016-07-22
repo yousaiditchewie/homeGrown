@@ -24,6 +24,7 @@ var PostSchema = new mongoose.Schema({
   likes: [LikeSchema]
 });
 
+// verify post content is less than 500 characters
 function check500(str) {
   return str.length > 0 && str.length < 500;
 };
