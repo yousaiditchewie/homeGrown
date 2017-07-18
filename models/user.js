@@ -3,26 +3,26 @@ var debug    = require('debug')('app:models');
 var bcrypt   = require('bcrypt-nodejs');
 
 // Goods refer to what a user brings to a meetup for trade
-var GoodSchema = new mongoose.Schema({
-  name:     {
-    type:     String,
-    required: true
-  },
-  description: {
-    type:     String,
-    validate: [check180, "Descriptions must be less than 180 characters."]
-  },
-  isReady:    {
-    type:    Boolean,
-    default: false
-  },
-  quantity:    {
-    type:      String,
-    required:  true,
-    default:   'S',
-    enum:      ['S', 'M', 'L', 'XL']
-  }
-});
+// var GoodSchema = new mongoose.Schema({
+//   name:     {
+//     type:     String,
+//     required: true
+//   },
+//   description: {
+//     type:     String,
+//     validate: [check180, "Descriptions must be less than 180 characters."]
+//   },
+//   isReady:    {
+//     type:    Boolean,
+//     default: false
+//   },
+//   quantity:    {
+//     type:      String,
+//     required:  true,
+//     default:   'S',
+//     enum:      ['S', 'M', 'L', 'XL']
+//   }
+// });
 
 var UserSchema = new mongoose.Schema({
   firstName:   {
@@ -60,7 +60,7 @@ var UserSchema = new mongoose.Schema({
     type:    Number,
     default: 5
   },
-  goods:       [GoodSchema]
+  // goods:       [GoodSchema]
   // posts:       [postSchema]
 });
 
