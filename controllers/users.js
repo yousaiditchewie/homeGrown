@@ -1,8 +1,6 @@
 // Require resource's model(s).
 var User = require("../models/user");
 
-
-
 // view all users
 var index = function(req, res, next){
   User.find({}, function(err, users) {
@@ -38,7 +36,6 @@ var create = function(req, res, next) {
   user.profilePic = req.body.profilePic;
   user.streetAddr = req.body.streetAddr;
   user.zipCode    = req.body.zipCode;
-
   user.save(function(err) {
     if (err) {
       if(err.code == 11000)
@@ -46,7 +43,6 @@ var create = function(req, res, next) {
     } else {
       return res.json(err);
     }
-
     res.json({message: "Welcome to homeGrown!"});
   });
 };
@@ -54,9 +50,7 @@ var create = function(req, res, next) {
 // update user
 var update = function(req, res) {
   User.findById(req.params.id, function(err, user) {
-
         if (err) res.send(err);
-
         // set the new user information if it exists in the request
         if (req.body.firstName)   user.firstNname  = req.body.firstNname;
         if (req.body.lastName)    user.lastName    = req.body.lastName;
@@ -66,11 +60,9 @@ var update = function(req, res) {
         if (req.body.profilePic)  user.profilePic  = req.body.profilePic;
         if (req.body.streetAddr)  user.streetAddr  = req.body.streetAddr;
         if (req.body.zipCode)     user.zipCode     = req.body.zipCode;
-
         // save the user
         user.save(function(err) {
           if (err) res.send(err);
-
           // return a message
           res.json({ message: 'User updated!' });
         });
