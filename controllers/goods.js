@@ -21,5 +21,35 @@ var show = function(req, res, next) {
     } else {
       res.json(good);
     }
-  })
-}
+  });
+};
+
+// create a new good
+var create = function(req, res, next) {
+  var good = new Good();
+  good.name        = req.body.name;
+  good.description = req.body.description;
+  good.userID      = req.body.userID;
+
+  good.save(function(err) {
+    if (err) return res.json(err);
+    res.json({message: `${good.name} saved!`});
+  });
+};
+
+// update good
+var update = function(req, res) {
+  Good.findById(req.params.id, function(err, good) {
+    if (err) res.send(err);
+
+    // set good information if it exists in the request
+    if (req.body.name)  good.name = req.body.name;
+    if (req.body.description) good.description = req.body.description;
+    // userID cannot be updated
+
+    good.save(function(err) {
+      if (err) res.send(err);
+      res.json({message: `${good.name} was updated.`});
+    });
+  });
+};

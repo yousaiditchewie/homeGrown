@@ -75,7 +75,7 @@ var update = function(req, res) {
           res.json({ message: 'User updated!' });
         });
   });
-}
+};
 
 // delete a user
 var deleteUser = function(req, res, next) {
