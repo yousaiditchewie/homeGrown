@@ -7,7 +7,7 @@ var UsersController   = require('../controllers/users');
 var MeetupsController = require('../controllers/meetups');
 var PostsController   = require('../controllers/posts');
 var AuthsController   = require('../controllers/auths');
-var GoodsController    = require('../controllers/goods');
+var GoodsController   = require('../controllers/goods');
 // root path:
 // router.get('/', pagesController.welcome);
 
